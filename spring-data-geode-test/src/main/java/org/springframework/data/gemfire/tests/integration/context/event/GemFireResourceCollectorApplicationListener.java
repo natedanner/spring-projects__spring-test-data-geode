@@ -210,9 +210,9 @@ public class GemFireResourceCollectorApplicationListener
 				.filter(Objects::nonNull)
 				.collect(Collectors.toSet());
 
-		resolvedGemFireResourceCollectorEventTypes = !resolvedGemFireResourceCollectorEventTypes.isEmpty()
-			? resolvedGemFireResourceCollectorEventTypes
-			: Collections.singleton(AfterTestClassEvent.class);
+		resolvedGemFireResourceCollectorEventTypes = resolvedGemFireResourceCollectorEventTypes.isEmpty()
+			? Collections.singleton(AfterTestClassEvent.class)
+			: resolvedGemFireResourceCollectorEventTypes;
 
 		this.gemfireResourceCollectorEventTypes = Collections.unmodifiableSet(resolvedGemFireResourceCollectorEventTypes);
 	}
@@ -329,8 +329,9 @@ public class GemFireResourceCollectorApplicationListener
 			collectGemFireResources(getSearchDirectory());
 		}
 
-		if (isTryCleanDiskStoreFilesEnabled())
+		if (isTryCleanDiskStoreFilesEnabled()) {
 			collectGemFireDiskStoreFiles();
+		}
 	}
 
 	/**
